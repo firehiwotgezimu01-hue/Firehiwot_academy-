@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Firehiwot Academy</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #090d20;
+  --panel: #151b38;
+  --purple: #9b70ff;
+  --cyan: #66e4ff;
+  --text: #f4f2ff;
+  --muted: #b9bfdc;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  line-height: 1.65;
+}
+header {
+  padding: 28px 18px;
+  text-align: center;
+  background: linear-gradient(135deg,#28164e,#102b53);
+}
+header h1 { margin: 0; font-size: 2rem; }
+header p { color: var(--muted); }
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px;
+  background: #10162d;
+  position: sticky;
+  top: 0;
+}
+a, button {
+  color: var(--text);
+}
+nav a {
+  text-decoration: none;
+  padding: 7px 10px;
+  border-radius: 8px;
+}
+nav a:hover { background: #39266b; }
+main {
+  width: min(100% - 28px, 950px);
+  margin: 25px auto;
+}
+section {
+  background: var(--panel);
+  border: 1px solid #30365c;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 18px 0;
+}
+h2 { color: var(--cyan); }
+h3 { color: #c9b4ff; }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+  gap: 12px;
+}
+.card {
+  background: #20264a;
+  border-radius: 12px;
+  padding: 14px;
+}
+button, select, input, textarea {
+  font: inherit;
+  border-radius: 9px;
+  padding: 10px;
+}
+button {
+  border: 0;
+  background: var(--purple);
+  color: #100d24;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover { filter: brightness(1.12); }
+select, input, textarea {
+  width: 100%;
+  background: #0e1430;
+  color: var(--text);
+  border: 1px solid #555b85;
+  margin: 5px 0 12px;
+}
+label { display: block; }
+.option {
+  display: block;
+  padding: 8px;
+  margin: 6px 0;
+  background: #20264a;
+  border-radius: 8px;
+}
+#feedback { font-weight: bold; }
+.small { color: var(--muted); font-size: .9rem; }
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>💜 Firehiwot Academy 💙</h1>
+  <p>Learn Today · Lead Tomorrow</p>
+  <p>ለ9ኛ–12ኛ ክፍል ተማሪዎች የትምህርትና የፈተና ዝግጅት መድረክ</p>
+  <label for="language">Language / ቋንቋ</label>
+  <select id="language" onchange="setLanguage(this.value)">
+    <option value="am">አማርኛ</option>
+    <option value="en">English</option>
+  </select>
+</header>
+
+<nav>
+  <a href="#subjects">Subjects</a>
+  <a href="#quiz">Practice</a>
+  <a href="#progress">Progress</a>
+  <a href="#plan">Study Plan</a>
+  <a href="#videos">Videos</a>
+  <a href="#scholarships">Scholarships</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<main>
+<section id="subjects">
+  <h2 data-am="📚 የትምህርት ዘርፎች" data-en="📚 Subjects">📚 የትምህርት ዘርፎች</h2>
+  <div class="cards">
+    <div class="card"><h3>🧬 Biology</h3><p>Cells, genetics, ecology and living systems.</p></div>
+    <div class="card"><h3>⚗️ Chemistry</h3><p>Atoms, reactions, acids and chemical calculations.</p></div>
+    <div class="card"><h3>⚡ Physics</h3><p>Motion, forces, energy and electricity.</p></div>
+    <div class="card"><h3>➗ Mathematics</h3><p>Algebra, geometry, functions and statistics.</p></div>
+    <div class="card"><h3>🔤 English</h3><p>Grammar, vocabulary, reading and writing.</p></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>📝 Practice Quiz</h2>
+  <p>Subject / የትምህርት ዘርፍ</p>
+  <select id="subject" onchange="nextQuestion()">
+    <option value="math">Mathematics</option>
+    <option value="biology">Biology</option>
+    <option value="chemistry">Chemistry</option>
+    <option value="physics">Physics</option>
+    <option value="english">English</option>
+  </select>
+  <h3 id="question">12 × 8 = ?</h3>
+  <div id="options"></div>
+  <p id="feedback" aria-live="polite"></p>
+  <p>Score: <span id="score">0</span></p>
+  <button onclick="nextQuestion()">Next Question →</button>
+  <p class="small">Demo question bank. AI-generated explanations require a connected AI service. Questions must be reviewed for accuracy.</p>
+</section>
+
+<section id="progress">
+  <h2>📊 My Learning Progress</h2>
+  <p>Answered questions: <strong id="answered">0</strong></p>
+  <p>Correct answers: <strong id="correct">0</strong></p>
+  <p class="small">This demo tracks progress only in this page session. It does not create an account or save results to a server.</p>
+  <button onclick="resetProgress()">Reset Progress</button>
+</section>
+
+<section id="plan">
+  <h2>📅 Study Plan</h2>
+  <div class="cards">
+    <div class="card"><h3>Monday</h3><p>Mathematics — 45 min</p><p>English — 30 min</p></div>
+    <div class="card"><h3>Tuesday</h3><p>Biology — 45 min</p><p>Physics — 30 min</p></div>
+    <div class="card"><h3>Wednesday</h3><p>Chemistry — 45 min</p><p>Mathematics — 30 min</p></div>
+    <div class="card"><h3>Thursday</h3><p>English — 30 min</p><p>Practice quiz — 45 min</p></div>
+    <div class="card"><h3>Friday</h3><p>Review difficult topics</p><p>Practice exam — 45 min</p></div>
+    <div class="card"><h3>Weekend</h3><p>Review notes and rest</p></div>
+  </div>
+</section>
+
+<section id="videos">
+  <h2>🎬 Learning Videos</h2>
+  <p>Use these searches to find lessons. Check the teacher, syllabus and accuracy before studying.</p>
+  <div class="cards">
+    <div class="card"><h3>Mathematics</h3><a href="https://www.youtube.com/results?search_query=grade+12+mathematics+lessons" target="_blank" rel="noopener">Find lessons ↗</a></div>
+    <div class="card"><h3>Biology</h3><a href="https://www.youtube.com/results?search_query=grade+12+biology+lessons" target="_blank" rel="noopener">Find lessons ↗</a></div>
+    <div class="card"><h3>Chemistry</h3><a href="https://www.youtube.com/results?search_query=grade+12+chemistry+lessons" target="_blank" rel="noopener">Find lessons ↗</a></div>
+    <div class="card"><h3>Physics</h3><a href="https://www.youtube.com/results?search_query=grade+12+physics+lessons" target="_blank" rel="noopener">Find lessons ↗</a></div>
+    <div class="card"><h3>English</h3><a href="https://www.youtube.com/results?search_query=grade+12+english+lessons" target="_blank" rel="noopener">Find lessons ↗</a></div>
+  </div>
+</section>
+
+<section id="scholarships">
+  <h2>🎓 Scholarship Resources</h2>
+  <div class="cards">
+    <div class="card"><h3>DAAD</h3><a href="https://www.daad.de/en/" target="_blank" rel="noopener">Official website ↗</a></div>
+    <div class="card"><h3>EducationUSA</h3><a href="https://educationusa.state.gov/" target="_blank" rel="noopener">Official website ↗</a></div>
+    <div class="card"><h3>Study in Japan</h3><a href="https://www.studyinjapan.go.jp/en/" target="_blank" rel="noopener">Official website ↗</a></div>
+  </div>
+  <p><a href="notes/scholarships/scholarship-guide.html" style="color:#70e5ff;">📘 Read the Scholarship Guide →</a></p>
+  <p class="small">Scholarship availability, eligibility and deadlines change. Confirm details on official websites. Never pay an unverified agent.</p>
+</section>
+
+<section id="interest">
+  <h2>🧑‍🎓 Student Interest Signup</h2>
+  <p>This is a demo form. It does not send or save your information. Secure form storage must be configured before collecting submissions.</p>
+  <form onsubmit="demoSignup(event)">
+    <label for="studentName">First name / የመጀመሪያ ስም</label>
+    <input id="studentName" maxlength="50" required>
+    <label for="grade">Grade / ክፍል</label>
+    <select id="grade" required>
+      <option value="">Choose grade</option>
+      <option>Grade 9</option><option>Grade 10</option>
+      <option>Grade 11</option><option>Grade 12</option>
+    </select>
+    <label for="interestSubject">Main interest / የምትወደው ትምህርት</label>
+    <select id="interestSubject" required>
+      <option value="">Choose subject</option>
+      <option>Biology</option><option>Chemistry</option>
+      <option>Physics</option><option>Mathematics</option>
+      <option>English</option><option>Scholarships</option>
+    </select>
+    <button type="submit">Preview Signup</button>
+    <p id="signupMessage" aria-live="polite"></p>
+  </form>
+</section>
+
+<section id="about">
+  <h2>ℹ️ About Firehiwot Academy</h2>
+  <p>Firehiwot Academy is a learning website concept designed to help students in Grades 9–12 practise school subjects, prepare for exams, organise study time and explore scholarship opportunities.</p>
+  <p>Our goal is to make learning clear, accessible and encouraging.</p>
+</section>
+
+<section id="contact">
+  <h2>✉️ Contact</h2>
+  <p>For questions or suggestions, add a verified school email or official contact method here before publishing.</p>
+  <p class="small">No contact details have been configured yet.</p>
+</section>
+<section id="notes" style="padding:24px 12px;">
+  <h2>📚 Study Notes</h2>
+  <p>Choose a subject to study.</p>
+
+  <div style="background:#171f3d;padding:18px;margin:12px 0;border-radius:12px;">
+    <h3>🧬 Biology</h3>
+    <p>Cell Biology — introduction to cells and organelles.</p>
+    <a href="notes/biology/cell-biology.html"
+       style="color:#70e5ff;">Read Biology Notes →</a>
+  </div>
+
+  <div style="background:#171f3d;padding:18px;margin:12px 0;border-radius:12px;">
+    <h3>⚗️ Chemistry</h3>
+    <p>Chemical bonding, ionic bonds and covalent bonds.</p>
+    <a href="notes/chemistry/chemical-bonding.html"
+       style="color:#70e5ff;">Read Chemistry Notes →</a>
+  </div>
+
+  <div style="background:#171f3d;padding:18px;margin:12px 0;border-radius:12px;">
+    <h3>⚡ Physics</h3>
+    <p>Motion, forces, energy and electricity.</p>
+    <a href="notes/physics/motion-and-forces.html"
+       style="color:#70e5ff;">Read Physics Notes →</a>
+  </div>
+
+  <div style="background:#171f3d;padding:18px;margin:12px 0;border-radius:12px;">
+    <h3>📐 Mathematics</h3>
+    <p>Algebra, equations, geometry and statistics.</p>
+    <a href="notes/mathematics/algebra-and-equations.html"
+       style="color:#70e5ff;">Read Mathematics Notes →</a>
+  </div>
+
+  <div style="background:#171f3d;padding:18px;margin:12px 0;border-radius:12px;">
+    <h3>📖 English</h3>
+    <p>Grammar, vocabulary and reading comprehension.</p>
+    <a href="notes/english/grammar-and-vocabulary.html"
+       style="color:#70e5ff;">Read English Notes →</a>
+  </div>
+</section>
+0
+</main>
+
+<footer>© 2026 Firehiwot Academy · Learn Today, Lead Tomorrow</footer>
+
+<script>
+const bank = {
+  math: [
+    {q:"12 × 8 = ?",o:["86","96","108","88"],a:1,e:"12 × 8 = 96."},
+    {q:"If x + 5 = 12, what is x?",o:["5","6","7","17"],a:2,e:"Subtract 5 from both sides: x = 7."},
+    {q:"What is 25% of 80?",o:["10","15","20","25"],a:2,e:"0.25 × 80 = 20."}
+  ],
+  biology: [
+    {q:"Which organelle produces most cellular ATP?",o:["Nucleus","Mitochondrion","Ribosome","Golgi body"],a:1,e:"Mitochondria produce most ATP in aerobic respiration."},
+    {q:"What is the basic unit of life?",o:["Atom","Tissue","Cell","Organ"],a:2,e:"The cell is the basic structural and functional unit of life."}
+  ],
+  chemistry: [
+    {q:"What is the chemical symbol for sodium?",o:["S","So","Na","N"],a:2,e:"Sodium's chemical symbol is Na."},
+    {q:"A solution with pH 3 is generally...",o:["Acidic","Neutral","Basic","Pure water"],a:0,e:"A pH below 7 is acidic under ordinary conditions."}
+  ],
+  physics: [
+    {q:"What is the SI unit of force?",o:["Joule","Watt","Newton","Pascal"],a:2,e:"Force is measured in newtons (N)."},
+    {q:"Speed equals...",o:["Distance ÷ time","Time ÷ distance","Mass × volume","Force ÷ time"],a:0,e:"Average speed = distance travelled ÷ time taken."}
+  ],
+  english: [
+    {q:"Choose the correct sentence.",o:["She go to school.","She goes to school.","She going school.","She gone school."],a:1,e:"With 'she' in the present simple, use 'goes'."},
+    {q:"What is a synonym of 'rapid'?",o:["Slow","Fast","Quiet","Late"],a:1,e:"Rapid means fast or quick."}
+  ]
+};
+let index = 0, score = 0, answered = 0, correct = 0, locked = false;
+function nextQuestion() {
+  const subject = document.getElementById("subject").value;
+  const list = bank[subject];
+  index = (index + 1) % list.length;
+  locked = false;
+  document.getElementById("question").textContent = list[index].q;
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("options").innerHTML = "";
+  list[index].o.forEach((option,i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "option";
+    b.style.width = "100%";
+    b.style.textAlign = "left";
+    b.textContent = option;
+    b.onclick = () => answer(i);
+    document.getElementById("options").appendChild(b);
+  });
+}
+function answer(choice) {
+  if (locked) return;
+  locked = true;
+  const list = bank[document.getElementById("subject").value];
+  const item = list[index];
+  answered++;
+  if (choice === item.a) {
+    score++;
+    correct++;
+    document.getElementById("feedback").textContent = "Correct! " + item.e;
+  } else {
+    document.getElementById("feedback").textContent = "Try again next time. " + item.e;
+  }
+  document.getElementById("score").textContent = score;
+  document.getElementById("answered").textContent = answered;
+  document.getElementById("correct").textContent = correct;
+}
+function resetProgress() {
+  score = 0; answered = 0; correct = 0;
+  document.getElementById("score").textContent = "0";
+  document.getElementById("answered").textContent = "0";
+  document.getElementById("correct").textContent = "0";
+}
+function demoSignup(event) {
+  event.preventDefault();
+  const name = document.getElementById("studentName").value;
+  const grade = document.getElementById("grade").value;
+  const subject = document.getElementById("interestSubject").value;
+  document.getElementById("signupMessage").textContent =
+    "Demo only: " + name + ", " + grade + ", interest: " + subject +
+    ". Nothing was sent or saved.";
+}
+function setLanguage(lang) {
+  document.querySelectorAll("[data-am]").forEach(el => {
+    el.textContent = lang === "en" ? el.dataset.en : el.dataset.am;
+  });
+}
+nextQuestion();
+</script>
+</body>
+</html>
+0
+

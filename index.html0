@@ -1,0 +1,200 @@
+
+cat > index.html <<'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Firehiwot Academy | Learn & Achieve</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#0b1020;color:#f8fafc;
+font-family:Arial,sans-serif;line-height:1.65}
+header{padding:16px 6%;display:flex;align-items:center;
+justify-content:space-between;gap:12px;background:#101831;
+border-bottom:1px solid #293657;position:sticky;top:0;z-index:5}
+.logo{font-size:18px;font-weight:800;color:#b9a0ff}
+nav{display:flex;gap:14px;flex-wrap:wrap}
+nav a{font-size:13px;color:#e2e8f0;text-decoration:none}
+main{max-width:1050px;margin:auto;padding:20px}
+.hero{text-align:center;padding:65px 10px 45px}
+.tag{color:#a78bfa;letter-spacing:3px;font-size:12px}
+h1{font-size:clamp(38px,8vw,65px);line-height:1.12;margin:20px 0}
+h1 span{color:#a78bfa}
+p{color:#cbd5e1}
+.btn{display:inline-block;border:0;border-radius:9px;padding:12px 18px;
+background:#8b5cf6;color:white;font-weight:bold;text-decoration:none;
+cursor:pointer;margin:5px}
+.secondary{background:#202d4b}
+section{padding:28px 0;scroll-margin-top:85px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+gap:15px}
+.card{background:#131d36;border:1px solid #303e60;
+padding:21px;border-radius:15px}
+.card h3{color:#c4b5fd;margin-top:5px}
+.small{font-size:13px;color:#94a3b8}
+.price{font-size:36px;color:#c4b5fd;font-weight:bold}
+label{display:block;margin-top:12px;font-size:14px}
+input,select{width:100%;padding:12px;border-radius:8px;
+border:1px solid #405071;background:#0b1020;color:white;margin-top:5px}
+#feedback,#quizResult{color:#86efac}
+footer{text-align:center;padding:25px;border-top:1px solid #293657}
+hr{border:0;border-top:1px solid #303e60;margin:20px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">✦ FIREHIWOT ACADEMY</div>
+  <nav>
+    <a href="#learn">Learn</a>
+    <a href="#scholarships">Scholarships</a>
+    <a href="#quiz">Practice</a>
+    <a href="#join">Join</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="tag">LEARN · PREPARE · ACHIEVE</div>
+    <h1>Your Future<br><span>Starts Here.</span></h1>
+    <p>A learning and scholarship guidance platform for
+    Ethiopian students in Grades 9–12.</p>
+    <a class="btn" href="#learn">Explore Learning</a>
+    <a class="btn secondary" href="#join">Annual Membership</a>
+  </div>
+
+  <section id="learn">
+    <h2>📚 Learning Resources</h2>
+    <p>Choose your grade to begin your preparation.</p>
+    <div class="grid">
+      <div class="card"><h3>Grade 9</h3>
+        <p>Build strong foundations in your school subjects.</p>
+        <button class="btn" onclick="chooseGrade(9)">Explore Grade 9</button>
+      </div>
+      <div class="card"><h3>Grade 10</h3>
+        <p>Review lessons and strengthen your understanding.</p>
+        <button class="btn" onclick="chooseGrade(10)">Explore Grade 10</button>
+      </div>
+      <div class="card"><h3>Grade 11</h3>
+        <p>Develop subject knowledge and prepare for Grade 12.</p>
+        <button class="btn" onclick="chooseGrade(11)">Explore Grade 11</button>
+      </div>
+      <div class="card"><h3>Grade 12</h3>
+        <p>Practice for the university entrance examination.</p>
+        <button class="btn" onclick="chooseGrade(12)">Explore Grade 12</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3 id="gradeTitle">Your study area</h3>
+      <p id="gradeText">Choose a grade above to see your study plan.</p>
+    </div>
+  </section>
+
+  <section id="scholarships">
+    <h2>🌍 Scholarship Guidance</h2>
+    <div class="grid">
+      <div class="card"><h3>Find Opportunities</h3>
+        <p>Learn how to search for scholarships that match your education level.</p>
+      </div>
+      <div class="card"><h3>Prepare Documents</h3>
+        <p>Organize transcripts, recommendation letters and other required documents.</p>
+      </div>
+      <div class="card"><h3>Application Deadlines</h3>
+        <p>Check eligibility and deadlines on the official provider's website.</p>
+      </div>
+    </div>
+    <p class="small">Scholarship availability and requirements vary.
+    Always verify details with the official scholarship provider.</p>
+  </section>
+
+  <section id="quiz">
+    <h2>📝 Entrance Exam Practice</h2>
+    <div class="card">
+      <p><strong>Sample question — Mathematics</strong></p>
+      <p>If 2x + 6 = 16, what is the value of x?</p>
+      <label><input type="radio" name="answer" value="3" style="width:auto"> 3</label>
+      <label><input type="radio" name="answer" value="5" style="width:auto"> 5</label>
+      <label><input type="radio" name="answer" value="8" style="width:auto"> 8</label>
+      <button class="btn" onclick="checkAnswer()">Check Answer</button>
+      <p id="quizResult"></p>
+    </div>
+  </section>
+
+  <section id="join">
+    <h2>🎓 Student Membership</h2>
+    <div class="card">
+      <p>Annual membership</p>
+      <div class="price">200 ETB <span style="font-size:15px">/ year</span></div>
+      <p>Explore educational resources and scholarship guidance.</p>
+      <hr>
+      <h3>Telebirr Payment Details</h3>
+      <p>Payment number: <strong id="paynumber">+251982983799</strong></p>
+      <button class="btn secondary" onclick="copyNumber()">Copy Payment Number</button>
+      <p class="small">Confirm the account holder's name before paying.
+      Never share your PIN or OTP.</p>
+      <hr>
+      <h3>Student Registration</h3>
+      <form id="register">
+        <label>Student full name</label>
+        <input name="fullname" required maxlength="80" placeholder="Full name">
+        <label>Grade</label>
+        <select name="grade" required>
+          <option value="">Choose grade</option>
+          <option>Grade 9</option><option>Grade 10</option>
+          <option>Grade 11</option><option>Grade 12</option>
+        </select>
+        <label>Email (optional)</label>
+        <input name="email" type="email" placeholder="Email address">
+        <button class="btn" type="submit">Prepare Registration</button>
+      </form>
+      <p id="feedback"></p>
+      <p class="small">Demo only: this form does not send or save your
+      information, verify payments, or activate accounts.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="logo">FIREHIWOT ACADEMY</div>
+  <p>Empowering students through education.</p>
+  <p class="small">Learn today. Prepare for tomorrow.</p>
+</footer>
+
+<script>
+function chooseGrade(g){
+  document.getElementById('gradeTitle').textContent='Grade '+g+' Study Plan';
+  document.getElementById('gradeText').textContent=
+    g===12
+    ? 'Focus on subject revision, timed practice tests and university entrance exam preparation.'
+    : 'Review your school lessons, practice questions regularly and build strong subject foundations.';
+  document.getElementById('gradeTitle').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function checkAnswer(){
+  const a=document.querySelector('input[name="answer"]:checked');
+  document.getElementById('quizResult').textContent=!a
+    ? 'Please select an answer first.'
+    : a.value==='5' ? 'Correct! 2x = 10, so x = 5.' : 'Not quite. Try solving 2x = 16 - 6.';
+}
+function copyNumber(){
+  const n='+251982983799';
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(n).then(()=>{
+      alert('Payment number copied: '+n);
+    }).catch(()=>prompt('Copy this number:',n));
+  }else{
+    prompt('Copy this payment number:',n);
+  }
+}
+document.getElementById('register').addEventListener('submit',function(e){
+  e.preventDefault();
+  document.getElementById('feedback').textContent=
+    'Demo form completed on this device only. No registration was sent or saved.';
+});
+</script>
+</body>
+</html>
+EOF
+0<h1>Welcome to Firehiwot Academy!</h1><p>My website is working!</p>
+python -m http.server 8080
+

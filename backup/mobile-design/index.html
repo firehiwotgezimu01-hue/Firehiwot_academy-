@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d1b">
+<title>Firehiwot Academy | Learn & Achieve</title>
+<style>
+:root {
+  --bg:#090d1b;
+  --panel:#141c30;
+  --text:#f3f4f6;
+  --muted:#aab4ca;
+  --accent:#a78bfa;
+  --cyan:#67e8f9;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  line-height:1.6;
+}
+header {
+  padding:18px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  background:#0e1426;
+  border-bottom:1px solid #28334c;
+}
+.logo { color:var(--accent); font-weight:bold; font-size:22px; }
+nav { display:flex; flex-wrap:wrap; gap:12px; }
+a { color:var(--cyan); text-decoration:none; }
+nav a { font-size:14px; }
+.hero { text-align:center; padding:70px 20px 55px; }
+.hero h1 { font-size:clamp(32px,7vw,54px); margin:10px 0; }
+.hero h1 span { color:var(--accent); }
+.hero p,.muted { color:var(--muted); }
+.btn {
+  display:inline-block;
+  background:var(--accent);
+  color:#101020;
+  padding:11px 18px;
+  border-radius:9px;
+  font-weight:bold;
+  border:0;
+  cursor:pointer;
+  margin:5px;
+}
+section { padding:35px 6%; scroll-margin-top:20px; }
+.section-title { text-align:center; margin-bottom:25px; }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+.card {
+  background:var(--panel);
+  border:1px solid #293550;
+  padding:22px;
+  border-radius:15px;
+}
+.card h3 { color:var(--accent); }
+input,select,textarea {
+  width:100%;
+  padding:12px;
+  margin:7px 0 14px;
+  border-radius:8px;
+  border:1px solid #46516b;
+  background:#0c1325;
+  color:white;
+}
+label { display:block; }
+.notice {
+  border-left:4px solid var(--cyan);
+  padding:12px;
+  background:#111b2d;
+  color:var(--muted);
+}
+footer {
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
+  border-top:1px solid #293550;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🎓 Firehiwot Academy</div>
+  <nav>
+    <a href="#lessons">Lessons</a>
+    <a href="#exams">Exams</a>
+    <a href="#scholarships">Scholarships</a>
+    <a href="#login">Login</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <p>LEARN • PREPARE • ACHIEVE</p>
+    <h1>Your future starts at <span>Firehiwot Academy</span></h1>
+    <p>Learning resources and preparation for Ethiopian students in Grades 9–12.</p>
+    <a class="btn" href="#lessons">Explore Learning</a>
+    <a class="btn" href="#exams">Practice Exams</a>
+  </section>
+
+  <section id="lessons">
+    <h2 class="section-title">📚 Learning Center</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>Grade 9</h3>
+        <p>Build strong foundations in mathematics, English and science.</p>
+      </article>
+      <article class="card">
+        <h3>Grade 10</h3>
+        <p>Review key concepts and prepare for school examinations.</p>
+      </article>
+      <article class="card">
+        <h3>Grade 11</h3>
+        <p>Develop subject knowledge and effective study habits.</p>
+      </article>
+      <article class="card">
+        <h3>Grade 12</h3>
+        <p>Prepare for university entrance examinations.</p>
+      </article>
+    </div>
+    <p class="notice">These are learning categories. Full lessons and downloadable notes can be added next.</p>
+  </section>
+
+  <section id="exams">
+    <h2 class="section-title">📝 Practice Corner</h2>
+    <div class="card">
+      <h3>Sample Question</h3>
+      <p>What is 12 × 8?</p>
+      <button class="btn" onclick="checkAnswer('wrong')">84</button>
+      <button class="btn" onclick="checkAnswer('right')">96</button>
+      <button class="btn" onclick="checkAnswer('wrong')">108</button>
+      <p id="answer" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section id="scholarships">
+    <h2 class="section-title">🎓 Scholarship Guidance</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>Find Opportunities</h3>
+        <p>Look for scholarships that match your grade, interests and goals.</p>
+      </article>
+      <article class="card">
+        <h3>Prepare Documents</h3>
+        <p>Keep your academic records and application documents organized.</p>
+      </article>
+      <article class="card">
+        <h3>Check Official Sources</h3>
+        <p>Always verify deadlines and requirements on the scholarship provider's official website.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="login">
+    <h2 class="section-title">🔐 Student Access</h2>
+    <div class="card">
+      <p>This is a preview of the student login area.</p>
+      <p class="notice">Secure accounts are not enabled yet. Do not enter a real password here.</p>
+      <label for="studentEmail">Email (demo only)</label>
+      <input id="studentEmail" type="email" placeholder="student@example.com">
+      <button class="btn" onclick="document.getElementById('loginMessage').textContent='Demo only: secure login has not been set up yet.'">Continue Demo</button>
+      <p id="loginMessage" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">✨ About Us</h2>
+    <div class="card">
+      <p>Firehiwot Academy aims to help students in Grades 9–12 learn, prepare for exams and explore scholarship opportunities.</p>
+      <p>Our goal is to make learning resources easier to discover and use.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">📩 Contact</h2>
+    <div class="card">
+      <p>Questions or suggestions about Firehiwot Academy?</p>
+      <p class="muted">A secure contact form and official contact details can be added when they are ready.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Firehiwot Academy</p>
+  <p>Learn • Prepare • Achieve</p>
+</footer>
+
+<script>
+function checkAnswer(result) {
+  const message = document.getElementById('answer');
+  message.textContent = result === 'right'
+    ? 'Correct! 12 × 8 = 96.'
+    : 'Not quite. Try again!';
+}
+</script>
+</body>
+</html>

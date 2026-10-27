@@ -1,0 +1,553 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Hub | Firehiwot Academy</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0b1024;
+  --card: #171b38;
+  --purple: #9b7bff;
+  --text: #f4f2ff;
+  --muted: #b9bdd8;
+  --border: #34375b;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 20px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+header, main, footer {
+  max-width: 1000px;
+  margin: auto;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 14px 0;
+}
+a { color: #c4b5fd; }
+h1, h2, h3 { line-height: 1.3; }
+.hero { padding: 20px 0; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(min(100%,280px),1fr));
+  gap: 16px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 18px;
+  min-width: 0;
+}
+input, select, button {
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0 12px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  font: inherit;
+}
+input, select {
+  background: #0b1024;
+  color: var(--text);
+}
+button {
+  background: var(--purple);
+  color: #100c25;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:focus, input:focus, select:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+.task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+  overflow-wrap: anywhere;
+}
+.task input {
+  width: auto;
+  margin: 0;
+}
+.task span { flex: 1; }
+.task button {
+  width: auto;
+  margin: 0;
+  padding: 6px 10px;
+}
+.badge {
+  display: inline-block;
+  border: 1px solid var(--purple);
+  border-radius: 12px;
+  padding: 10px;
+  margin: 5px;
+}
+.locked { opacity: .45; }
+.muted { color: var(--muted); }
+#quizOptions label {
+  display: block;
+  padding: 8px;
+  margin: 8px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+#quizOptions input { width: auto; }
+footer {
+  padding: 20px 0;
+  color: var(--muted);
+}
+
+/* Quiz mobile readability improvements */
+#quiz {
+  padding: 24px;
+  margin: 18px 0;
+}
+#quiz h2 {
+  font-size: 1.6rem;
+}
+#question {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  font-weight: 600;
+  margin: 18px 0;
+}
+#quizOptions {
+  display: grid;
+  gap: 12px;
+}
+#quizOptions label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  border: 1px solid #d0d7de;
+  border-radius: 12px;
+  cursor: pointer;
+}
+#quizOptions input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+#checkAnswer, #nextQuestion {
+  font-size: 1.05rem;
+  padding: 12px 20px;
+  min-height: 48px;
+  margin-top: 12px;
+}
+#quizFeedback {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+@media (max-width: 600px) {
+  #quiz {
+    padding: 18px;
+  }
+  #question {
+    font-size: 1.15rem;
+  }
+  #quizOptions label {
+    font-size: 1rem;
+    padding: 13px;
+  }
+}
+
+</style>
+</head>
+<body>
+<header>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="advanced.html">Learning</a>
+    <a href="#planner">Study Planner</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#notes">Notes Library</a>
+    <a href="#achievements">Achievements</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <p class="muted">FIREHIWOT ACADEMY</p>
+  <h1>My Learning Hub 💜</h1>
+  <p>Plan your study, practise, discover notes and celebrate progress.</p>
+  <p id="announcement" class="muted" aria-live="polite"></p>
+</section>
+
+<div class="grid">
+<section class="card" id="planner">
+  <h2>📅 Daily Study Planner</h2>
+  <form id="taskForm">
+    <label for="taskInput">Study task</label>
+    <input id="taskInput" maxlength="100"
+      placeholder="e.g. Revise algebra" required>
+    <button type="submit">Add Study Task</button>
+  </form>
+  <p id="taskSummary" aria-live="polite">0 tasks completed</p>
+  <div id="taskList"></div>
+</section>
+
+<section class="card" id="quiz">
+  <h2>🧠 Quick Quiz</h2>
+  <p id="quizCount">Completed quizzes: 0</p>
+  <p id="question"></p>
+  <div id="quizOptions"></div>
+  <button id="checkAnswer" type="button">Check Answer</button>
+  <p id="quizFeedback" aria-live="polite"></p>
+  <button id="nextQuestion" type="button" hidden>Next Question</button>
+</section>
+
+<section class="card" id="achievements">
+  <h2>🏆 Achievements & Badges</h2>
+  <p class="muted">Complete study tasks and practise to unlock badges.</p>
+  <div id="badges"></div>
+</section>
+
+<section class="card" id="notes">
+  <h2>📚 Notes & Course Library</h2>
+  <label for="noteSearch">Search a subject</label>
+  <input id="noteSearch" type="search"
+    placeholder="Search Biology, Physics, Maths...">
+  <div id="noteList"></div>
+  <p id="noNotes" hidden>No matching subjects found.</p>
+</section>
+</div>
+
+<section class="card">
+  <h2>📊 My Learning Summary</h2>
+  <p id="summary"></p>
+  <a href="dashboard.html">Return to Student Dashboard →</a>
+</section>
+</main>
+
+<footer>Firehiwot Academy · Learn a little every day.</footer>
+
+<script>
+const read = (key, fallback) => {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : value;
+  } catch {
+    return fallback;
+  }
+};
+
+const save = (key, value) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const readJSON = (key, fallback) => {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+};
+
+let tasks = readJSON("faStudyTasks", []);
+if (!Array.isArray(tasks)) tasks = [];
+
+let quizCount = Math.max(
+  0, Number(read("faQuizCount", "0")) || 0
+);
+
+const subjects = [
+  ["Biology", "notes/biology/cell-biology.html"],
+  ["Chemistry", "notes/chemistry/chemical-bonding.html"],
+  ["Physics", "notes/physics/motion-and-forces.html"],
+  ["Mathematics", "notes/mathematics/algebra-and-equations.html"],
+  ["English", "notes/english/grammar-and-vocabulary.html"],
+  ["Scholarship Guide", "notes/scholarships/scholarship-guide.html"]
+];
+
+function renderTasks() {
+  const list = document.getElementById("taskList");
+  list.replaceChildren();
+
+  tasks.forEach((task, index) => {
+    const row = document.createElement("div");
+    row.className = "task";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = !!task.done;
+    checkbox.setAttribute("aria-label", "Complete " + task.text);
+
+    checkbox.addEventListener("change", () => {
+      tasks[index].done = checkbox.checked;
+      save("faStudyTasks", tasks);
+      renderTasks();
+      renderSummary();
+    });
+
+    const label = document.createElement("span");
+    label.textContent = task.text;
+    if (task.done) label.style.textDecoration = "line-through";
+
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.textContent = "Remove";
+    remove.setAttribute("aria-label", "Remove " + task.text);
+    remove.addEventListener("click", () => {
+      tasks.splice(index, 1);
+      save("faStudyTasks", tasks);
+      renderTasks();
+      renderSummary();
+    });
+
+    row.append(checkbox, label, remove);
+    list.append(row);
+  });
+
+  const done = tasks.filter(task => task.done).length;
+  document.getElementById("taskSummary").textContent =
+    done + " of " + tasks.length + " tasks completed";
+  renderBadges();
+}
+
+document.getElementById("taskForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const input = document.getElementById("taskInput");
+  const text = input.value.trim();
+  if (!text) return;
+
+  tasks.push({ text, done: false });
+  if (!save("faStudyTasks", tasks)) {
+    tasks.pop();
+    alert("Storage is unavailable. Please try again.");
+    return;
+  }
+
+  input.value = "";
+  renderTasks();
+  renderSummary();
+});
+
+const questions = [
+  {
+    q: "Which organelle releases most energy during cellular respiration?",
+    options: ["Nucleus", "Mitochondrion", "Ribosome", "Vacuole"],
+    answer: 1,
+    explanation: "Mitochondria produce most of the cell's ATP."
+  },
+  {
+    q: "What is the chemical formula for water?",
+    options: ["CO₂", "O₂", "H₂O", "NaCl"],
+    answer: 2,
+    explanation: "A water molecule contains two hydrogen atoms and one oxygen atom."
+  },
+  {
+    q: "What is the SI unit of force?",
+    options: ["Joule", "Watt", "Pascal", "Newton"],
+    answer: 3,
+    explanation: "Force is measured in newtons (N)."
+  },
+  {
+    q: "Solve: x + 7 = 12.",
+    options: ["3", "5", "7", "19"],
+    answer: 1,
+    explanation: "Subtract 7 from both sides: x = 12 − 7 = 5."
+  },
+  {
+    q: "Which word is a verb in this sentence: 'Birds fly daily'?",
+    options: ["Birds", "Fly", "Daily", "The"],
+    answer: 1,
+    explanation: "'Fly' describes the action."
+  }
+];
+
+let questionIndex = 0;
+let answered = false;
+let correctAnswers = 0;
+
+function showQuestion() {
+  answered = false;
+  const q = questions[questionIndex];
+  document.getElementById("question").textContent =
+    "Question " + (questionIndex + 1) + " of " +
+    questions.length + ": " + q.q;
+
+  const options = document.getElementById("quizOptions");
+  options.replaceChildren();
+
+  q.options.forEach((option, index) => {
+    const label = document.createElement("label");
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "quizAnswer";
+    radio.value = index;
+    label.append(radio, document.createTextNode(" " + option));
+    options.append(label);
+  });
+
+  document.getElementById("quizFeedback").textContent = "";
+  document.getElementById("checkAnswer").hidden = false;
+  document.getElementById("nextQuestion").hidden = true;
+}
+
+document.getElementById("checkAnswer").addEventListener("click", () => {
+  if (answered) return;
+  const selected = document.querySelector(
+    'input[name="quizAnswer"]:checked'
+  );
+
+  if (!selected) {
+    document.getElementById("quizFeedback").textContent =
+      "Choose an answer first.";
+    return;
+  }
+
+  answered = true;
+  const q = questions[questionIndex];
+  const correct = Number(selected.value) === q.answer;
+  if (correct) correctAnswers++;
+
+  document.getElementById("quizFeedback").textContent =
+    (correct ? "Well done! " : "Not quite. ") + q.explanation;
+  document.getElementById("checkAnswer").hidden = true;
+  document.getElementById("nextQuestion").hidden = false;
+  document.getElementById("nextQuestion").textContent =
+    questionIndex === questions.length - 1
+      ? "Finish Quiz" : "Next Question";
+});
+
+document.getElementById("nextQuestion").addEventListener("click", () => {
+  if (questionIndex < questions.length - 1) {
+    questionIndex++;
+    showQuestion();
+    return;
+  }
+
+  quizCount++;
+  try {
+    localStorage.setItem("faQuizCount", String(quizCount));
+  } catch {}
+
+  document.getElementById("question").textContent =
+    "Quiz complete! Your score: " + correctAnswers +
+    " / " + questions.length;
+  document.getElementById("quizOptions").replaceChildren();
+  document.getElementById("quizFeedback").textContent =
+    "Keep practising to improve your knowledge.";
+  document.getElementById("checkAnswer").hidden = true;
+  document.getElementById("nextQuestion").hidden = true;
+  document.getElementById("quizCount").textContent =
+    "Completed quizzes: " + quizCount;
+
+  renderBadges();
+  renderSummary();
+
+  const progress = Math.max(
+    0, Number(read("faProgress", "0")) || 0
+  );
+  try {
+    localStorage.setItem(
+      "faProgress", String(Math.min(100, progress + 10))
+    );
+  } catch {}
+
+  correctAnswers = 0;
+  questionIndex = 0;
+  document.getElementById("nextQuestion").hidden = false;
+  document.getElementById("nextQuestion").textContent = "Try Again";
+  document.getElementById("nextQuestion").onclick = () => {
+    document.getElementById("nextQuestion").onclick = null;
+    showQuestion();
+  };
+});
+
+function renderNotes() {
+  const query = document.getElementById("noteSearch")
+    .value.trim().toLowerCase();
+  const list = document.getElementById("noteList");
+  list.replaceChildren();
+
+  const matches = subjects.filter(subject =>
+    subject[0].toLowerCase().includes(query)
+  );
+
+  matches.forEach(subject => {
+    const p = document.createElement("p");
+    const a = document.createElement("a");
+    a.href = subject[1];
+    a.textContent = subject[0] + " →";
+    p.append(a);
+    list.append(p);
+  });
+
+  document.getElementById("noNotes").hidden = matches.length !== 0;
+}
+
+document.getElementById("noteSearch").addEventListener(
+  "input", renderNotes
+);
+
+function renderBadges() {
+  const done = tasks.filter(task => task.done).length;
+  const badges = [
+    ["📘 First Step", done >= 1],
+    ["📚 Study Builder", done >= 5],
+    ["🧠 Quiz Starter", quizCount >= 1],
+    ["🏅 Quiz Explorer", quizCount >= 5]
+  ];
+
+  const area = document.getElementById("badges");
+  area.replaceChildren();
+
+  badges.forEach(([name, unlocked]) => {
+    const item = document.createElement("span");
+    item.className = "badge" + (unlocked ? "" : " locked");
+    item.textContent = (unlocked ? "🔓 " : "🔒 ") + name;
+    area.append(item);
+  });
+}
+
+function renderSummary() {
+  const done = tasks.filter(task => task.done).length;
+  const progress = Math.max(
+    0, Number(read("faProgress", "0")) || 0
+  );
+
+  document.getElementById("summary").textContent =
+    "Study progress: " + progress + "% · Tasks completed: " +
+    done + " · Quizzes completed: " + quizCount;
+}
+
+document.getElementById("announcement").textContent =
+  read("faAnnouncement", "");
+
+renderTasks();
+renderNotes();
+renderBadges();
+renderSummary();
+showQuestion();
+</script>
+</body>
+</html>
+0
+

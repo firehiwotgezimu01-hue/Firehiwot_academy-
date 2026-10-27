@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Firehiwot Academy | Dashboard</title>
+<style>
+:root {
+  --bg:#0b1020; --panel:#151b32; --panel2:#1c2340;
+  --purple:#8b5cf6; --cyan:#70e5ff; --text:#f4f5ff;
+  --muted:#aab2d0; --border:#303858;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; font-family:Arial,sans-serif; background:var(--bg);
+  color:var(--text);
+}
+header {
+  padding:18px 22px; display:flex; align-items:center;
+  justify-content:space-between; gap:12px; flex-wrap:wrap;
+  background:var(--panel); border-bottom:1px solid var(--border);
+}
+.brand { font-size:20px; font-weight:bold; }
+.brand span { color:var(--cyan); }
+nav { display:flex; flex-wrap:wrap; gap:8px; }
+a,button {
+  color:var(--text); text-decoration:none; cursor:pointer;
+  border:1px solid var(--border); border-radius:9px;
+  padding:10px 13px; background:var(--panel2); font-size:14px;
+}
+a:hover,button:hover { border-color:var(--cyan); }
+main { max-width:1100px; margin:auto; padding:24px 16px; }
+h1 { font-size:clamp(25px,5vw,36px); margin-bottom:8px; }
+p { color:var(--muted); line-height:1.6; }
+.eyebrow { color:var(--cyan); font-weight:bold; }
+.grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px; margin:22px 0;
+}
+.card {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:16px; padding:20px;
+}
+.card h2,.card h3 { margin-top:0; }
+.number { font-size:30px; font-weight:bold; color:var(--cyan); }
+.progress {
+  height:9px; background:#303858; border-radius:20px;
+  overflow:hidden; margin:12px 0;
+}
+.progress div {
+  width:0%; height:100%; background:linear-gradient(90deg,var(--purple),var(--cyan));
+}
+.actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:14px; }
+input,select {
+  width:100%; padding:12px; border-radius:8px;
+  border:1px solid var(--border); background:var(--bg);
+  color:var(--text); margin:7px 0 14px;
+}
+label { color:var(--muted); }
+section { scroll-margin-top:20px; margin-top:28px; }
+.notice { border-left:3px solid var(--cyan); padding-left:12px; }
+footer { text-align:center; padding:25px; color:var(--muted); }
+.hidden { display:none; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">🔥 Firehiwot <span>Academy</span></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="advanced.html">Learning</a>
+    <a href="#notes">Notes</a>
+    <a href="#profile">Profile</a>
+  </nav>
+</header>
+
+<main>
+  <p class="eyebrow">YOUR LEARNING SPACE</p>
+  <h1 id="welcome">Welcome to your Dashboard!</h1>
+  <p>Learn, practise, track your progress and explore scholarship resources.</p>
+
+  <div class="grid">
+    <article class="card">
+      <h3>📈 Study Progress</h3>
+      <div class="number" id="progressText">0%</div>
+      <div class="progress"><div id="progressBar"></div></div>
+      <p>Your progress is saved on this device.</p>
+      <button onclick="addProgress()">Mark study session complete</button>
+    </article>
+
+    <article class="card">
+      <h3>📝 Quiz Practice</h3>
+      <div class="number" id="quizText">0</div>
+      <p>Quiz sessions completed on this device.</p>
+      <a href="advanced.html#quiz">Open Practice Quiz →</a>
+    </article>
+
+    <article class="card">
+      <h3>📚 Study Notes</h3>
+      <p>Continue learning your school subjects.</p>
+      <div class="actions">
+        <a href="notes/biology/cell-biology.html">Biology</a>
+        <a href="notes/chemistry/chemical-bonding.html">Chemistry</a>
+        <a href="notes/physics/motion-and-forces.html">Physics</a>
+        <a href="notes/mathematics/algebra-and-equations.html">Maths</a>
+        <a href="notes/english/grammar-and-vocabulary.html">English</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>🎓 Scholarships</h3>
+      <p>Explore guidance for finding scholarship opportunities.</p>
+      <a href="notes/scholarships/scholarship-guide.html">Open Scholarship Guide →</a>
+    </article>
+  </div>
+
+  <section id="profile" class="card">
+    <h2>👤 Student Profile</h2>
+    <p>Edit your display name and grade. This demo stores these details in this browser on this device.</p>
+    <form id="profileForm">
+      <label for="studentName">Display name</label>
+      <input id="studentName" maxlength="50" placeholder="Enter your display name">
+      <label for="studentGrade">Grade</label>
+      <select id="studentGrade">
+        <option value="">Choose grade</option>
+        <option>Grade 9</option><option>Grade 10</option>
+        <option>Grade 11</option><option>Grade 12</option>
+      </select>
+      <button type="submit">Save Profile</button>
+    </form>
+    <p id="profileMessage" role="status"></p>
+  </section>
+
+  <section id="admin" class="card">
+    <h2>🛡️ Admin Tools</h2>
+    <p class="notice">Demo only: this is not a secure admin login. Changes here affect this browser only.</p>
+    <button id="adminToggle" type="button">Show Admin Tools</button>
+    <div id="adminTools" class="hidden">
+      <h3>Dashboard Settings</h3>
+      <label for="announcement">Learning announcement</label>
+      <input id="announcement" maxlength="180" placeholder="Write a short announcement">
+      <button id="saveAnnouncement" type="button">Save Announcement</button>
+      <p id="announcementView"></p>
+      <button id="resetProgress" type="button">Reset local progress</button>
+    </div>
+  </section>
+</main>
+
+<footer>Firehiwot Academy · Learn a little every day.</footer>
+
+<script>
+const getSaved = (key, fallback = "") => {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : value;
+  } catch {
+    return fallback;
+  }
+};
+
+const setSaved = (key, value) => {
+  try {
+    localStorage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+let progress = Math.min(100, Math.max(0, Number(getSaved("faProgress", "0")) || 0));
+let quizCount = Math.max(0, Number(getSaved("faQuizCount", "0")) || 0);
+
+function renderProgress() {
+  document.getElementById("progressText").textContent = progress + "%";
+  document.getElementById("progressBar").style.width = progress + "%";
+  document.getElementById("quizText").textContent = quizCount;
+}
+function addProgress() {
+  progress = Math.min(100, progress + 10);
+  setSaved("faProgress", String(progress));
+  renderProgress();
+}
+function loadProfile() {
+  const name = getSaved("faStudentName");
+  const grade = getSaved("faStudentGrade");
+  document.getElementById("studentName").value = name;
+  document.getElementById("studentGrade").value = grade;
+  document.getElementById("welcome").textContent =
+    name ? "Welcome back, " + name + "!" : "Welcome to your Dashboard!";
+}
+document.getElementById("profileForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const name = document.getElementById("studentName").value.trim();
+  const grade = document.getElementById("studentGrade").value;
+  setSaved("faStudentName", name);
+  setSaved("faStudentGrade", grade);
+  loadProfile();
+  document.getElementById("profileMessage").textContent = "Profile saved on this device.";
+});
+document.getElementById("adminToggle").addEventListener("click", function() {
+  const tools = document.getElementById("adminTools");
+  tools.classList.toggle("hidden");
+  this.textContent = tools.classList.contains("hidden") ? "Show Admin Tools" : "Hide Admin Tools";
+});
+document.getElementById("saveAnnouncement").addEventListener("click", function() {
+  const message = document.getElementById("announcement").value.trim();
+  setSaved("faAnnouncement", message);
+  showAnnouncement();
+});
+function showAnnouncement() {
+  const message = getSaved("faAnnouncement");
+  document.getElementById("announcement").value = message;
+  document.getElementById("announcementView").textContent =
+    message ? "Announcement: " + message : "No announcement yet.";
+}
+document.getElementById("resetProgress").addEventListener("click", function() {
+  if (confirm("Reset progress and quiz count saved on this device?")) {
+    progress = 0;
+    quizCount = 0;
+    setSaved("faProgress", "0");
+    setSaved("faQuizCount", "0");
+    renderProgress();
+  }
+});
+renderProgress();
+loadProfile();
+showAnnouncement();
+</script>
+</body>
+</html>
+0
+

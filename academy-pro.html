@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8fafc">
+<title>Firehiwot Academy Pro</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--green:#15803d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);padding:18px 16px}
+.wrap{max-width:1050px;margin:auto}
+.brand{font-size:1.35rem;font-weight:800;color:var(--blue)}
+header p{margin:4px 0;color:var(--muted)}
+nav{display:flex;gap:8px;overflow-x:auto;padding:12px 0}
+nav a{white-space:nowrap;text-decoration:none;color:var(--ink);background:#eef2ff;padding:9px 13px;border-radius:10px;font-weight:650}
+main{max-width:1050px;margin:auto;padding:16px}
+.hero{background:#eaf1ff;border-radius:20px;padding:24px;margin-bottom:18px}
+h1{font-size:clamp(1.7rem,5vw,2.5rem);line-height:1.2;margin:0 0 10px}
+h2{font-size:1.35rem;margin:0 0 12px}
+p{margin:8px 0}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px;min-width:0}
+.stat{font-size:2rem;font-weight:800;color:var(--blue)}
+button,input,select,textarea{font:inherit}
+button{border:0;border-radius:10px;padding:12px 16px;background:var(--blue);color:white;font-weight:700;cursor:pointer;min-height:46px}
+button.secondary{background:#e8eefc;color:#1e40af}
+input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:12px;background:#fff;color:var(--ink);margin:6px 0 12px}
+label{font-weight:650}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.progress{height:12px;background:#e2e8f0;border-radius:99px;overflow:hidden}
+.progress div{height:100%;background:#22a06b;width:0;transition:width .2s}
+.option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);padding:12px;border-radius:12px;margin:8px 0;cursor:pointer}
+.option input{width:20px;height:20px;margin:3px 0}
+.note{border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0}
+.note a{font-weight:750;color:var(--blue)}
+.tag{display:inline-block;border-radius:8px;background:#dcfce7;color:#166534;padding:3px 9px;font-size:.85rem}
+footer{text-align:center;padding:28px 16px;color:var(--muted)}
+section{scroll-margin-top:12px}
+@media(min-width:700px){main{padding:24px}.hero{padding:32px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">🎓 Firehiwot Academy Pro</div>
+    <p>Your learning space. Your progress. Your goals.</p>
+    <nav aria-label="Main navigation">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#assistant">Study Assistant</a>
+      <a href="#challenge">Challenges</a>
+      <a href="#library">Library</a>
+      <a href="learning-hub.html">Existing Quiz Hub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <span class="tag">STUDENT SPACE</span>
+    <h1>Learn a little every day.</h1>
+    <p>Track your study goals, practise questions and find your notes in one place.</p>
+    <div class="actions">
+      <button onclick="location.href='#challenge'">Start a challenge</button>
+      <button class="secondary" onclick="location.href='#library'">Explore notes</button>
+    </div>
+  </section>
+
+  <section id="dashboard" class="card">
+    <h2>📊 Student Dashboard</h2>
+    <p class="muted">Your progress is saved in this browser on this device.</p>
+    <div class="grid">
+      <div class="card"><p class="muted">Points earned</p><div id="points" class="stat">0</div></div>
+      <div class="card"><p class="muted">Questions answered correctly</p><div id="correctCount" class="stat">0</div></div>
+      <div class="card"><p class="muted">Study goals completed</p><div id="goalsCount" class="stat">0</div></div>
+    </div>
+    <label for="goal">Today's study goal (minutes)</label>
+    <input id="goal" type="number" min="5" max="600" value="30">
+    <label for="studied">Minutes studied today</label>
+    <input id="studied" type="number" min="0" max="600" value="0">
+    <div class="progress"><div id="progressBar"></div></div>
+    <p id="progressText" class="muted">0% of your goal</p>
+    <button onclick="saveStudy()">Save today's progress</button>
+    <p id="studyMessage" aria-live="polite"></p>
+    <button class="secondary" onclick="resetProgress()">Reset saved progress</button>
+  </section>
+
+  <section id="assistant" class="card">
+    <h2>🧠 Study Assistant</h2>
+    <p class="muted">Ask for a study plan, a topic explanation, or practice ideas. This offline demo uses prepared responses; it is not a live AI service.</p>
+    <label for="topic">What would you like help studying?</label>
+    <textarea id="topic" rows="3" placeholder="Example: Help me plan 30 minutes of Biology revision"></textarea>
+    <button onclick="askAssistant()">Get study help</button>
+    <div id="assistantReply" class="note" aria-live="polite">Your study suggestions will appear here.</div>
+  </section>
+
+  <section id="challenge" class="card">
+    <h2>🏆 Academy Challenge</h2>
+    <p class="muted">Answer a practice question to earn points. Each correct answer earns 10 points per new question.</p>
+    <div id="questionArea">
+      <p id="questionText"></p>
+      <div id="options"></div>
+      <button id="checkBtn" onclick="checkAnswer()">Check answer</button>
+    </div>
+    <p id="challengeFeedback" aria-live="polite"></p>
+    <button class="secondary" onclick="nextQuestion()">Next question</button>
+    <p>Badges: <span id="badges">No badges yet — start practising!</span></p>
+  </section>
+
+  <section id="library" class="card">
+    <h2>📚 Smart Digital Library</h2>
+    <p class="muted">Search subjects and open your existing local notes.</p>
+    <label for="search">Search notes</label>
+    <input id="search" type="search" placeholder="Search Biology, Physics, scholarships..." oninput="filterNotes()">
+    <div id="notesList"></div>
+    <p class="muted">If a note link does not open, check that its file exists in your project folder.</p>
+  </section>
+</main>
+<footer>Firehiwot Academy Pro · Keep learning, one step at a time.</footer>
+
+<script>
+const STORE = "firehiwotAcademyPro_v1";
+const defaultData = {
+  points:0, correct:0, goals:0, goal:30, studied:0, completed:{}, answered:{}
+};
+let data;
+try {
+  data = {...defaultData, ...JSON.parse(localStorage.getItem(STORE) || "{}")};
+} catch(e) {
+  data = {...defaultData};
+}
+function persist(){
+  try { localStorage.setItem(STORE, JSON.stringify(data)); }
+  catch(e) { console.warn("Could not save progress", e); }
+}
+function renderDashboard(){
+  document.getElementById("points").textContent=data.points;
+  document.getElementById("correctCount").textContent=data.correct;
+  document.getElementById("goalsCount").textContent=data.goals;
+  document.getElementById("goal").value=data.goal;
+  document.getElementById("studied").value=data.studied;
+  const percent=Math.min(100, Math.round(100*data.studied/Math.max(1,data.goal)));
+  document.getElementById("progressBar").style.width=percent+"%";
+  document.getElementById("progressText").textContent=percent+"% of your study goal";
+  document.getElementById("badges").textContent =
+    data.points>=100 ? "🏅 Academy Achiever" :
+    data.points>=30 ? "⭐ Rising Scholar" :
+    data.points>=10 ? "🌱 First Steps" : "No badges yet — start practising!";
+}
+function saveStudy(){
+  const goal=Number(document.getElementById("goal").value);
+  const studied=Number(document.getElementById("studied").value);
+  if(!Number.isFinite(goal)||goal<5||goal>600||!Number.isFinite(studied)||studied<0||studied>600){
+    document.getElementById("studyMessage").textContent="Enter a goal from 5–600 minutes and study time from 0–600.";
+    return;
+  }
+  data.goal=goal; data.studied=studied;
+  const today=new Date().toLocaleDateString();
+  if(studied>=goal && data.completed[today]!==true){
+    data.completed[today]=true; data.goals++;
+    document.getElementById("studyMessage").textContent="Goal completed! Great work.";
+  } else {
+    document.getElementById("studyMessage").textContent=studied>=goal?"Today's goal is already recorded.":"Progress saved. Keep going!";
+  }
+  persist();renderDashboard();
+}
+function resetProgress(){
+  if(!confirm("Reset all saved points and study progress on this device?")) return;
+  data={...defaultData,completed:{},answered:{}};
+  persist();renderDashboard();
+  document.getElementById("studyMessage").textContent="Progress reset.";
+}
+function askAssistant(){
+  const text=document.getElementById("topic").value.trim().toLowerCase();
+  const out=document.getElementById("assistantReply");
+  if(!text){out.textContent="Type a subject or describe what you want to study first.";return;}
+  let reply;
+  if(text.includes("plan")||text.includes("minute")||text.includes("schedule")){
+    reply="Try this study session: 5 minutes reviewing previous notes, 15 minutes learning one small topic, 5 minutes answering practice questions, and 5 minutes checking what you remember. Take short breaks when needed.";
+  } else if(text.includes("biology")||text.includes("cell")){
+    reply="Biology tip: write down the key term, explain it in your own words, then draw a simple labelled diagram. Finish by answering a question without looking at your notes.";
+  } else if(text.includes("chemistry")){
+    reply="Chemistry tip: list the known quantities, identify the rule or equation, balance chemical equations carefully, and check units in every calculation.";
+  } else if(text.includes("physics")){
+    reply="Physics tip: write the known values with units, identify the unknown quantity, choose the relevant relationship, substitute carefully, and check whether the answer's unit makes sense.";
+  } else if(text.includes("math")){
+    reply="Mathematics tip: solve one step at a time, show your working, and substitute your result back into the original problem to check it.";
+  } else if(text.includes("english")){
+    reply="English tip: read the sentence in context, identify its main idea, and practise writing one original example using the grammar or vocabulary you are learning.";
+  } else {
+    reply="Try the active recall method: study a small section, hide your notes, write what you remember, then check and correct it. Split the topic into smaller questions.";
+  }
+  out.textContent=reply+" (Prepared offline suggestion; not generated by a live AI model.)";
+}
+const questions=[
+ {q:"Which organelle is the main site of aerobic cellular respiration?",a:["Nucleus","Mitochondrion","Ribosome","Golgi apparatus"],correct:1},
+ {q:"What is the chemical symbol for sodium?",a:["S","So","Na","N"],correct:2},
+ {q:"What is the SI unit of force?",a:["Joule","Watt","Pascal","Newton"],correct:3},
+ {q:"Solve: 7 × 8 = ?",a:["54","56","64","48"],correct:1},
+ {q:"Which word is a verb in 'Birds fly high'?",a:["Birds","fly","high","the"],correct:1}
+];
+let qIndex=0;
+function showQuestion(){
+  const q=questions[qIndex];
+  document.getElementById("questionText").textContent=(qIndex+1)+". "+q.q;
+  const box=document.getElementById("options");box.replaceChildren();
+  q.a.forEach((answer,i)=>{
+    const label=document.createElement("label");label.className="option";
+    const radio=document.createElement("input");radio.type="radio";radio.name="answer";radio.value=i;
+    const span=document.createElement("span");span.textContent=answer;
+    label.append(radio,span);box.append(label);
+  });
+  document.getElementById("challengeFeedback").textContent="";
+  document.getElementById("checkBtn").disabled=false;
+}
+function checkAnswer(){
+  const selected=document.querySelector('input[name="answer"]:checked');
+  const feedback=document.getElementById("challengeFeedback");
+  if(!selected){feedback.textContent="Choose an answer first.";return;}
+  const key="q"+qIndex;
+  if(data.answered[key]){
+    feedback.textContent="You have already answered this question in this round. Go to the next question.";
+    return;
+  }
+  data.answered[key]=true;
+  if(Number(selected.value)===questions[qIndex].correct){
+    data.points+=10;data.correct++;
+    feedback.textContent="Correct! You earned 10 points.";
+  }else{
+    feedback.textContent="Not quite. Review the topic and try another question.";
+  }
+  persist();renderDashboard();
+  document.getElementById("checkBtn").disabled=true;
+}
+function nextQuestion(){
+  qIndex=(qIndex+1)%questions.length;
+  if(qIndex===0)data.answered={};
+  showQuestion();
+}
+const notes=[
+ ["Biology","Biology notes","notes/biology/"],
+ ["Chemistry","Chemistry notes","notes/chemistry/"],
+ ["Physics","Physics notes","notes/physics/"],
+ ["Mathematics","Mathematics notes","notes/mathematics/"],
+ ["English","English notes","notes/english/"],
+ ["Scholarships","Scholarship resources","notes/scholarships/"]
+];
+function renderNotes(list){
+  const root=document.getElementById("notesList");root.replaceChildren();
+  if(!list.length){root.textContent="No matching subjects found.";return;}
+  list.forEach(n=>{
+    const div=document.createElement("div");div.className="note";
+    const title=document.createElement("strong");title.textContent=n[0]+" — ";
+    const a=document.createElement("a");a.href=n[2];a.textContent=n[1];
+    const desc=document.createElement("p");desc.className="muted";desc.textContent="Open the folder if your browser supports directory listings.";
+    div.append(title,a,desc);root.append(div);
+  });
+}
+function filterNotes(){
+  const term=document.getElementById("search").value.toLowerCase().trim();
+  renderNotes(notes.filter(n=>n.join(" ").toLowerCase().includes(term)));
+}
+renderDashboard();showQuestion();renderNotes(notes);
+</script>
+</body>
+</html>

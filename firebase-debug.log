@@ -1,0 +1,56 @@
+[debug] [2026-10-26T22:40:29.484Z] ----------------------------------------------------------------------
+[debug] [2026-10-26T22:40:29.492Z] Command:       /data/data/com.termux/files/usr/bin/node /data/data/com.termux/files/usr/bin/firebase projects:addfirebase
+[debug] [2026-10-26T22:40:29.493Z] CLI Version:   15.34.1
+[debug] [2026-10-26T22:40:29.494Z] Platform:      android
+[debug] [2026-10-26T22:40:29.494Z] Node Version:  v26.3.1
+[debug] [2026-10-26T22:40:29.495Z] Detected Agent: unknown
+[debug] [2026-10-26T22:40:29.495Z] Time:          Tue Oct 27 2026 01:40:29 GMT+0300 (East Africa Time)
+[debug] [2026-10-26T22:40:29.496Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-10-26T22:40:29.516Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-10-26T22:40:29.518Z] > authorizing via signed-in user (firehiwotgezimu01@gmail.com)
+[debug] [2026-10-26T22:40:29.601Z] Checked if tokens are valid: true, expires at: 1793057506319
+[debug] [2026-10-26T22:40:29.601Z] Checked if tokens are valid: true, expires at: 1793057506319
+[debug] [2026-10-26T22:40:29.607Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/availableProjects pageSize=100
+[debug] [2026-10-26T22:40:30.552Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/availableProjects 200
+[debug] [2026-10-26T22:40:30.553Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/availableProjects [omitted]
+[debug] [2026-10-26T22:41:22.632Z] Checked if tokens are valid: true, expires at: 1793057506319
+[debug] [2026-10-26T22:41:22.633Z] Checked if tokens are valid: true, expires at: 1793057506319
+[debug] [2026-10-26T22:41:22.633Z] >>> [apiv2][query] POST https://firebase.googleapis.com/v1beta1/projects/firehiwot-academy-2026:addFirebase [none]
+[debug] [2026-10-26T22:41:23.933Z] <<< [apiv2][status] POST https://firebase.googleapis.com/v1beta1/projects/firehiwot-academy-2026:addFirebase 403
+[debug] [2026-10-26T22:41:23.934Z] <<< [apiv2][body] POST https://firebase.googleapis.com/v1beta1/projects/firehiwot-academy-2026:addFirebase {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2026-10-26T22:41:23.941Z] Request to https://firebase.googleapis.com/v1beta1/projects/firehiwot-academy-2026:addFirebase had HTTP Error: 403, The caller does not have permission
+[debug] [2026-10-26T22:41:23.948Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/firehiwot-academy-2026:addFirebase had HTTP Error: 403, The caller does not have permission
+    at responseToError (/data/data/com.termux/files/usr/lib/node_modules/firebase-tools/lib/responseToError.js:53:12)
+    at RetryOperation._fn (/data/data/com.termux/files/usr/lib/node_modules/firebase-tools/lib/apiv2.js:415:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[error] 
+[error] Error: Failed to add Firebase to Google Cloud Platform project. See firebase-debug.log for more info.
+[debug] [2026-10-26T22:42:06.031Z] ----------------------------------------------------------------------
+[debug] [2026-10-26T22:42:06.041Z] Command:       /data/data/com.termux/files/usr/bin/node /data/data/com.termux/files/usr/bin/firebase --debug projects:addfirebase
+[debug] [2026-10-26T22:42:06.043Z] CLI Version:   15.34.1
+[debug] [2026-10-26T22:42:06.043Z] Platform:      android
+[debug] [2026-10-26T22:42:06.044Z] Node Version:  v26.3.1
+[debug] [2026-10-26T22:42:06.045Z] Detected Agent: unknown
+[debug] [2026-10-26T22:42:06.045Z] Time:          Tue Oct 27 2026 01:42:06 GMT+0300 (East Africa Time)
+[debug] [2026-10-26T22:42:06.046Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-10-26T22:42:06.067Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-10-26T22:42:06.069Z] > authorizing via signed-in user (firehiwotgezimu01@gmail.com)
+[debug] [2026-10-26T22:42:06.154Z] Checked if tokens are valid: true, expires at: 1793057506319
+[debug] [2026-10-26T22:42:06.155Z] Checked if tokens are valid: true, expires at: 1793057506319
+[debug] [2026-10-26T22:42:06.161Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/availableProjects pageSize=100
+[debug] [2026-10-26T22:42:07.006Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/availableProjects 200
+[debug] [2026-10-26T22:42:07.007Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/availableProjects [omitted]
+[debug] [2026-10-26T22:42:09.017Z] Checked if tokens are valid: true, expires at: 1793057506319
+[debug] [2026-10-26T22:42:09.018Z] Checked if tokens are valid: true, expires at: 1793057506319
+[debug] [2026-10-26T22:42:09.019Z] >>> [apiv2][query] POST https://firebase.googleapis.com/v1beta1/projects/firehiwot-academy-2026:addFirebase [none]
+[debug] [2026-10-26T22:42:09.490Z] <<< [apiv2][status] POST https://firebase.googleapis.com/v1beta1/projects/firehiwot-academy-2026:addFirebase 403
+[debug] [2026-10-26T22:42:09.492Z] <<< [apiv2][body] POST https://firebase.googleapis.com/v1beta1/projects/firehiwot-academy-2026:addFirebase {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2026-10-26T22:42:09.499Z] Request to https://firebase.googleapis.com/v1beta1/projects/firehiwot-academy-2026:addFirebase had HTTP Error: 403, The caller does not have permission
+[debug] [2026-10-26T22:42:09.505Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/firehiwot-academy-2026:addFirebase had HTTP Error: 403, The caller does not have permission
+    at responseToError (/data/data/com.termux/files/usr/lib/node_modules/firebase-tools/lib/responseToError.js:53:12)
+    at RetryOperation._fn (/data/data/com.termux/files/usr/lib/node_modules/firebase-tools/lib/apiv2.js:415:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[error] 
+[error] Error: Failed to add Firebase to Google Cloud Platform project. See firebase-debug.log for more info.
